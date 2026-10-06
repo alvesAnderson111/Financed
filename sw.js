@@ -1,5 +1,14 @@
-const CACHE_NAME = "financed-v5";
-const ASSETS = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.json", "./assets/icon.svg", "./assets/icon-192.png", "./assets/icon-512.png", "./icon-192.png", "./icon-512.png"];
+const CACHE_NAME = "financed-v6";
+const ASSETS = [
+  "./",
+  "./index.html",
+  "./styles.css",
+  "./app.js",
+  "./manifest.json",
+  "./assets/icon-192.png",
+  "./assets/icon-512.png",
+  "./assets/icon.svg"
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -25,12 +34,17 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-        return response;
-      })
-      .catch(() => caches.match(event.request).then((cached) => cached))
+    caches.match(event.request).then((cached) => {
+      const fetchPromise = fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return response;
+        })
+        .catch(() => cached);
+      return cached || fetchPromise;
+    })
   );
 });
