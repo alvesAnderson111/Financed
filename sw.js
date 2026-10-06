@@ -1,4 +1,4 @@
-const CACHE_NAME = "financed-v6";
+const CACHE_NAME = "financed-v7";
 const ASSETS = [
   "./",
   "./index.html",
@@ -6,7 +6,6 @@ const ASSETS = [
   "./app.js",
   "./manifest.json",
   "./assets/icon-192.png",
-  "./assets/icon-512.png",
   "./assets/icon.svg"
 ];
 
