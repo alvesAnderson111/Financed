@@ -158,6 +158,14 @@ function openMonth(year, monthIndex) {
   els.monthView.classList.remove("hidden");
   renderMonth();
   window.scrollTo({ top: 0, behavior: "smooth" });
+
+  const today = new Date();
+  if (today.getFullYear() === year && today.getMonth() === monthIndex) {
+    requestAnimationFrame(() => {
+      const todayRow = els.daysTableBody.querySelector(".is-today");
+      todayRow?.scrollIntoView({ block: "center", behavior: "smooth" });
+    });
+  }
 }
 
 function renderMonth() {
@@ -215,6 +223,7 @@ function renderMonth() {
   els.daysTableBody.querySelectorAll(".money-input").forEach((input) => {
     input.addEventListener("input", handleInput);
     input.addEventListener("blur", handleBlur);
+    input.addEventListener("keydown", handleInputKeydown);
   });
 }
 
@@ -239,6 +248,20 @@ function handleBlur(event) {
     input.value = valueToNumber(input.value).toFixed(2);
   }
   showToast("Salvo automaticamente");
+}
+
+function handleInputKeydown(event) {
+  if (event.key !== "Enter") return;
+
+  event.preventDefault();
+  const inputs = Array.from(els.daysTableBody.querySelectorAll(".money-input"));
+  const index = inputs.indexOf(event.currentTarget);
+  const next = inputs[index + 1];
+
+  if (next) {
+    next.focus();
+    next.select();
+  }
 }
 
 function updateDayAndMonthTotals(key) {
