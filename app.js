@@ -1,8 +1,6 @@
 const STORAGE_KEY = "alysson-finance-v1";
 const THEME_KEY = "alysson-theme";
 const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-
-applyTheme(loadTheme());
 const locale = "pt-BR";
 const currencyFormatter = new Intl.NumberFormat(locale, {
   style: "currency",
@@ -41,6 +39,8 @@ const els = {
   themeToggle: document.getElementById("themeToggle"),
   themeIcon: document.getElementById("themeIcon")
 };
+
+applyTheme(loadTheme());
 
 function loadTheme() {
   const saved = localStorage.getItem(THEME_KEY);
