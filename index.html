@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <meta name="description" content="Controle diário de ganhos, despesas e lucro líquido.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <title>Alysson — Controle financeiro</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">ALYSSON</p>
+        <h1>Controle financeiro</h1>
+        <p class="subtitle">Registre o ganho e a despesa de cada dia.</p>
+      </div>
+      <button id="todayButton" class="button button-secondary" type="button">Hoje</button>
+    </header>
+
+    <main>
+      <section id="calendarView" class="view" aria-labelledby="calendarTitle">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Calendário</p>
+            <h2 id="calendarTitle">2026</h2>
+          </div>
+          <div class="year-controls">
+            <button id="prevYear" class="icon-button" type="button" aria-label="Ano anterior">‹</button>
+            <button id="nextYear" class="icon-button" type="button" aria-label="Próximo ano">›</button>
+          </div>
+        </div>
+
+        <div id="yearSummary" class="year-summary" aria-live="polite"></div>
+        <div id="monthsGrid" class="months-grid"></div>
+      </section>
+
+      <section id="monthView" class="view hidden" aria-labelledby="monthTitle">
+        <div class="section-heading month-heading">
+          <div>
+            <button id="backButton" class="back-button" type="button">← Calendário</button>
+            <p class="section-kicker">Planilha diária</p>
+            <h2 id="monthTitle">Janeiro 2026</h2>
+          </div>
+          <div id="monthNetButtonWrap"></div>
+        </div>
+
+        <div class="month-help">
+          <span>Preencha somente os valores de <strong>ganho</strong> e <strong>despesa</strong>. O lucro líquido é calculado automaticamente.</span>
+        </div>
+
+        <div class="sheet-card">
+          <div class="table-scroll">
+            <table class="sheet-table">
+              <thead>
+                <tr>
+                  <th scope="col">Dia</th>
+                  <th scope="col">Ganho total</th>
+                  <th scope="col">Despesa total</th>
+                  <th scope="col">Lucro líquido</th>
+                </tr>
+              </thead>
+              <tbody id="daysTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="monthModal" class="modal-backdrop hidden" role="presentation">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <div>
+          <p class="section-kicker">Fechamento mensal</p>
+          <h2 id="modalTitle">Janeiro 2026</h2>
+        </div>
+        <button id="closeModal" class="icon-button" type="button" aria-label="Fechar">×</button>
+      </div>
+
+      <div class="modal-stats">
+        <div class="stat-card">
+          <span>Ganho bruto</span>
+          <strong id="modalIncome">R$ 0,00</strong>
+        </div>
+        <div class="stat-card">
+          <span>Gasto bruto</span>
+          <strong id="modalExpense">R$ 0,00</strong>
+        </div>
+        <div class="stat-card stat-highlight">
+          <span>Lucro líquido</span>
+          <strong id="modalNet">R$ 0,00</strong>
+        </div>
+      </div>
+
+      <p class="modal-note">
+        O lucro líquido é calculado como <strong>ganho total − despesas totais</strong>.
+        Um lucro bruto contábil separado exigiria também o registro dos custos diretos.
+      </p>
+    </section>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
