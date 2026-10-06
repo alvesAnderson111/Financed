@@ -1,4 +1,8 @@
 const STORAGE_KEY = "alysson-finance-v1";
+const THEME_KEY = "alysson-theme";
+const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+applyTheme(loadTheme());
 const locale = "pt-BR";
 const currencyFormatter = new Intl.NumberFormat(locale, {
   style: "currency",
@@ -33,8 +37,32 @@ const els = {
   modalIncome: document.getElementById("modalIncome"),
   modalExpense: document.getElementById("modalExpense"),
   modalNet: document.getElementById("modalNet"),
-  toast: document.getElementById("toast")
+  toast: document.getElementById("toast"),
+  themeToggle: document.getElementById("themeToggle"),
+  themeIcon: document.getElementById("themeIcon")
 };
+
+function loadTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  return saved === "dark" || saved === "light"
+    ? saved
+    : (prefersDark.matches ? "dark" : "light");
+}
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  els.themeIcon.textContent = theme === "dark" ? "☼" : "☾";
+  els.themeToggle.setAttribute(
+    "aria-label",
+    theme === "dark" ? "Ativar tema claro" : "Ativar tema escuro"
+  );
+}
+
+function toggleTheme() {
+  const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  localStorage.setItem(THEME_KEY, nextTheme);
+  applyTheme(nextTheme);
+}
 
 function loadEntries() {
   try {
@@ -333,6 +361,13 @@ function showToast(message) {
   clearTimeout(state.toastTimer);
   state.toastTimer = setTimeout(() => els.toast.classList.remove("show"), 1400);
 }
+
+els.themeToggle.addEventListener("click", toggleTheme);
+
+prefersDark.addEventListener("change", (event) => {
+  if (localStorage.getItem(THEME_KEY)) return;
+  applyTheme(event.matches ? "dark" : "light");
+});
 
 els.prevYear.addEventListener("click", () => {
   state.year -= 1;
