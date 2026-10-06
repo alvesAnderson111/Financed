@@ -1,0 +1,28 @@
+name: Decode Icons
+on:
+  push:
+    paths:
+      - 'assets/*.b64'
+      - '.github/workflows/decode-icons.yml'
+  workflow_dispatch:
+jobs:
+  decode:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode icons
+        run: |
+          if [ -f assets/icon-192.b64 ]; then
+            base64 -d assets/icon-192.b64 > assets/icon-192.png
+          fi
+          if [ -f assets/icon-512.b64 ]; then
+            base64 -d assets/icon-512.b64 > assets/icon-512.png
+          fi
+          ls -la assets/
+      - name: Commit decoded icons
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/icon-192.png assets/icon-512.png
+          git diff --staged --quiet || git commit -m "Decode PWA icons from base64"
+          git push
