@@ -37,7 +37,7 @@ const els = {
   modalNet: document.getElementById("modalNet"),
   toast: document.getElementById("toast"),
   themeToggle: document.getElementById("themeToggle"),
-  themeIcon: document.getElementById("themeIcon")
+  themeColor: document.getElementById("themeColor")
 };
 
 applyTheme(loadTheme());
@@ -51,11 +51,15 @@ function loadTheme() {
 
 function applyTheme(theme) {
   document.documentElement.dataset.theme = theme;
-  els.themeIcon.textContent = theme === "dark" ? "☼" : "☾";
-  els.themeToggle.setAttribute(
-    "aria-label",
-    theme === "dark" ? "Ativar tema claro" : "Ativar tema escuro"
-  );
+  const isDark = theme === "dark";
+  const label = isDark ? "Ativar tema claro" : "Ativar tema escuro";
+
+  els.themeToggle.setAttribute("aria-label", label);
+  els.themeToggle.setAttribute("title", label);
+
+  if (els.themeColor) {
+    els.themeColor.setAttribute("content", isDark ? "#0f172a" : "#f3f4f6");
+  }
 }
 
 function toggleTheme() {
