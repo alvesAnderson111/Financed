@@ -1,11 +1,19 @@
 {
-  "name": "Alysson — Controle financeiro",
-  "short_name": "Alysson",
+  "name": "Financed",
+  "short_name": "Financed",
   "description": "Controle diário de ganhos, despesas e lucro líquido.",
   "lang": "pt-BR",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#f3f4f6",
-  "theme_color": "#111827",
-  "icons": []
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
 }
