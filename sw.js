@@ -1,5 +1,5 @@
-const CACHE_NAME = "alysson-v2";
-const ASSETS = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.json"];
+const CACHE_NAME = "financed-v3";
+const ASSETS = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.json", "./assets/icon.svg"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
